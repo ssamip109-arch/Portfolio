@@ -69,3 +69,66 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ============ DESIGN IMAGE VIEWER ============
+const designImages = [
+    { src: 'projects/assets/HomePage.png', title: 'Boxchampy Homepage' },
+    { src: 'projects/assets/About Page.png', title: 'Boxchampy About Page' },
+    { src: 'projects/assets/Conatct Page.png', title: 'Boxchampy Contact Page' },
+    { src: 'projects/assets/Location Page.png', title: 'Boxchampy Location Page' }
+];
+
+const imageViewer = document.getElementById('imageViewer');
+const imageViewerImage = document.getElementById('imageViewerImage');
+const imageViewerCaption = document.getElementById('imageViewerCaption');
+let activeDesignIndex = 0;
+
+function showDesignImage(index) {
+    activeDesignIndex = (index + designImages.length) % designImages.length;
+    const designImage = designImages[activeDesignIndex];
+    imageViewerImage.src = designImage.src;
+    imageViewerImage.alt = designImage.title;
+    imageViewerCaption.textContent = `${designImage.title} (${activeDesignIndex + 1} of ${designImages.length})`;
+}
+
+function openDesignViewer(index) {
+    showDesignImage(index);
+    imageViewer.hidden = false;
+    document.body.classList.add('viewer-open');
+}
+
+function closeDesignViewer() {
+    imageViewer.hidden = true;
+    document.body.classList.remove('viewer-open');
+}
+
+document.querySelectorAll('.design-viewer-trigger').forEach(trigger => {
+    trigger.addEventListener('click', event => {
+        event.preventDefault();
+        openDesignViewer(Number(trigger.dataset.designIndex));
+    });
+});
+
+document.querySelector('.image-viewer-close').addEventListener('click', closeDesignViewer);
+document.querySelector('.image-viewer-prev').addEventListener('click', () => showDesignImage(activeDesignIndex - 1));
+document.querySelector('.image-viewer-next').addEventListener('click', () => showDesignImage(activeDesignIndex + 1));
+
+imageViewer.addEventListener('click', event => {
+    if (event.target === imageViewer) {
+        closeDesignViewer();
+    }
+});
+
+document.addEventListener('keydown', event => {
+    if (imageViewer.hidden) {
+        return;
+    }
+
+    if (event.key === 'Escape') {
+        closeDesignViewer();
+    } else if (event.key === 'ArrowLeft') {
+        showDesignImage(activeDesignIndex - 1);
+    } else if (event.key === 'ArrowRight') {
+        showDesignImage(activeDesignIndex + 1);
+    }
+});
