@@ -197,6 +197,49 @@ body {
     pointer-events: none;
 }
 
+/* ============ PORTRAIT (HOVER REVEAL) ============ */
+.hero-portrait {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    width: 280px;
+    height: 360px;
+    transform: translateY(-50%) scale(0.85) rotate(3deg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s, box-shadow 0.6s ease;
+    z-index: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    pointer-events: none;
+    border: 1px solid var(--border);
+}
+
+.hero:hover .hero-portrait {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) scale(1) rotate(0deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 80px rgba(212, 163, 115, 0.12);
+    border-color: var(--border-hover);
+}
+
+.hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
 .hero-content {
     max-width: 800px;
     position: relative;
@@ -227,8 +270,14 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.3);
+    }
 }
 
 .hero h1 {
@@ -313,8 +362,14 @@ body {
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ============ SECTION COMMON ============ */
@@ -518,6 +573,12 @@ section {
     gap: 32px;
 }
 
+.design-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
 .project-card {
     background: var(--bg-primary);
     border: 1px solid var(--border);
@@ -542,6 +603,149 @@ section {
     justify-content: center;
     position: relative;
     overflow: hidden;
+}
+
+.project-preview {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.project-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.design-showcase {
+    height: 280px;
+    padding: 14px;
+    background: #f1ece5;
+    position: relative;
+}
+
+.design-main-preview {
+    display: block;
+    height: 218px;
+    padding: 12px;
+    overflow: hidden;
+    background: #f1ece5;
+}
+
+.design-main-preview .project-img {
+    object-fit: contain;
+}
+
+.design-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    height: 42px;
+    margin-top: 10px;
+}
+
+.design-gallery a {
+    display: block;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid transparent;
+}
+
+.design-gallery a:first-child,
+.design-gallery a:hover,
+.design-gallery a:focus-visible {
+    border-color: var(--accent);
+}
+
+.design-gallery img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.image-viewer[hidden] {
+    display: none;
+}
+
+.image-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 90px;
+    background: rgba(10, 10, 10, 0.94);
+}
+
+.image-viewer-content {
+    max-width: min(900px, 90vw);
+    max-height: 90vh;
+    margin: 0;
+    text-align: center;
+}
+
+.image-viewer-content img {
+    display: block;
+    max-width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.image-viewer-content figcaption {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.image-viewer-close,
+.image-viewer-control {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-hover);
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.image-viewer-close:hover,
+.image-viewer-control:hover,
+.image-viewer-close:focus-visible,
+.image-viewer-control:focus-visible {
+    background: var(--accent);
+    color: var(--bg-primary);
+}
+
+.image-viewer-close {
+    top: 24px;
+    right: 28px;
+}
+
+.image-viewer-prev {
+    left: 28px;
+}
+
+.image-viewer-next {
+    right: 28px;
+}
+
+body.viewer-open {
+    overflow: hidden;
+}
+
+.project-preview:hover .project-img,
+.project-preview:focus-visible .project-img {
+    transform: scale(1.04);
 }
 
 .project-thumbnail .placeholder {
@@ -725,6 +929,7 @@ footer p a:hover {
     .about-grid,
     .skills-grid,
     .projects-grid,
+    .design-grid,
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -776,6 +981,28 @@ footer p a:hover {
     .project-thumbnail {
         height: 160px;
     }
+
+    .image-viewer {
+        padding: 60px 48px 32px;
+    }
+
+    .image-viewer-control {
+        width: 38px;
+        height: 38px;
+    }
+
+    .image-viewer-prev {
+        left: 8px;
+    }
+
+    .image-viewer-next {
+        right: 8px;
+    }
+
+    /* Hide portrait on mobile */
+    .hero-portrait {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -790,4 +1017,10 @@ footer p a:hover {
     .contact-form {
         padding: 24px;
     }
+}
+
+/* Optional: Make graphic design cards span full width */
+.project-card:last-child,
+.project-card:nth-child(3) {
+    grid-column: 1 / -1;
 }
