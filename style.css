@@ -220,9 +220,17 @@ body {
 }
 
 .hero-content {
-    max-width: 800px;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     position: relative;
     z-index: 1;
+}
+
+/* Add to your style.css */
+.hero .container {
+    flex-grow: 1;
+    width: 100%;
 }
 
 .hero h1 {
