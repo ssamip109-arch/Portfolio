@@ -227,6 +227,7 @@ body {
     z-index: 1;
 }
 
+/* Add to your style.css */
 .hero .container {
     flex-grow: 1;
     width: 100%;
